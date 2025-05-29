@@ -58,13 +58,14 @@ CLERK_SECRET_KEY=your_clerk_secret_key
 ```
 
 ## Supabase Setup
+
 1. Register for an account at [https://supabase.com](https://supabase.com)
-2. Buat project baru
-3. Di dashboard Supabase, klik nama project Anda di topbar
-4. Klik tombol **Connect** di kanan atas
-5. Buka tab **ORMs**
-6. Salin file .env.local  yang tersedia, dan masukkan ke dalam variabel di bawah ini
-7. Jangan lupa mengganti `YOUR_PASSWORD` pada string tersebut dengan password database Anda (bisa dilihat di halaman **Project Settings > Database**)
+2. Create a new project
+3. In the Supabase dashboard, click on your project name in the topbar
+4. Click the **Connect** button on the top right
+5. Open the **ORMs** tab
+6. Copy the .env.local file provided, and insert it into the variable below
+7. Don't forget to replace `YOUR_PASSWORD` in the string with your database password (can be found in **Project Settings > Database**)
 
 Tambahkan ke dalam file `.env`:
 
@@ -75,7 +76,10 @@ DATABASE_URL=your_supabase_connection_pooling_url
 # Direct connection to the database. Used for migrations
 DIRECT_URL=your_supabase_direct_connection_url
 ```
+
 >
+
 ## Migrate & Push Database
+
 1. Run the `npx prism migrate dev` command to create a new table in the database.
 2. Run the `npm run db:push` command to push the changes to the database.
