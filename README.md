@@ -10,7 +10,7 @@ Before you start and running this project, you need to install the following too
 
 ## Clerk Setup
 
-1. Sign up for a account at [https://clerk.com](https://clerk.com)
+1. Sign up for a account at [https://clerk.com](https://clerk.com).
 2. Create a new project application.
 3. Once the app is created, get the following values from the Clerk Dashboard:
    1. Publishable Key
@@ -27,13 +27,13 @@ CLERK_SECRET_KEY=your_clerk_secret_key
 
 ## Supabase Setup
 
-1. Register for an account at [https://supabase.com](https://supabase.com)
-2. Create a new project
-3. In the Supabase dashboard, click on your project name in the topbar
-4. Click the **Connect** button on the top right
-5. Open the **ORMs** tab
-6. Copy the .env.local file provided, and insert it into the variable below
-7. Don't forget to replace `YOUR_PASSWORD` in the string with your database password (can be found in **Project Settings > Database**)
+1. Register for an account at [https://supabase.com](https://supabase.com).
+2. Create a new project.
+3. In the Supabase dashboard, click on your project name in the topbar.
+4. Click the **Connect** button on the top right.
+5. Open the **ORMs** tab.
+6. Copy the .env.local file provided, and insert it into the variable below.
+7. Don't forget to replace `YOUR_PASSWORD` in the string with your database password (can be found in **Project Settings > Database**).
 
 Add them to the `.env` file:
 
