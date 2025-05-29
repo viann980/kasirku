@@ -1,10 +1,9 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-// Query => Fetching data
-// Mutation => Creating, updating, or deleting data
-
+// ROUTER CATEGORY UTAMA
 export const categoryRouter = createTRPCRouter({
+  // QUERY: Ambil Semua Kategori
   getCategories: protectedProcedure.query(async ({ ctx }) => {
     const { db } = ctx;
 
@@ -19,6 +18,7 @@ export const categoryRouter = createTRPCRouter({
     return categories;
   }),
 
+  // MUTATION: Buat Kategori Baru
   createCategory: protectedProcedure
     .input(
       z.object({
@@ -41,6 +41,7 @@ export const categoryRouter = createTRPCRouter({
       return newCategory;
     }),
 
+  // MUTATION: Hapus Kategori Berdasarkan ID
   deleteCategoryById: protectedProcedure
     .input(
       z.object({
@@ -57,6 +58,7 @@ export const categoryRouter = createTRPCRouter({
       });
     }),
 
+  // MUTATION: Edit Kategori Berdasarkan ID
   editCategory: protectedProcedure
     .input(
       z.object({
