@@ -67,7 +67,7 @@ CLERK_SECRET_KEY=your_clerk_secret_key
 6. Copy the .env.local file provided, and insert it into the variable below
 7. Don't forget to replace `YOUR_PASSWORD` in the string with your database password (can be found in **Project Settings > Database**)
 
-Tambahkan ke dalam file `.env`:
+Add them to the `.env` file:
 
 ```env
 # Connect to Supabase via connection pooling
