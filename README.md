@@ -45,9 +45,9 @@ Before you start and running this project, you need to install the following too
 1. Sign up for a account at [https://clerk.com](https://clerk.com)
 2. Create a new project application.
 3. Once the app is created, get the followinf values from the Clerk Dashboard:
-   Publishable Key
+   1. Publishable Key
    - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-   Secret Key
+   2. Secret Key
    - `CLERK_SECRET_KEY`
 
 Add them to the `.env` file.
