@@ -1,3 +1,5 @@
+# Simple Post Nextjs
+
 # Create T3 App
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
@@ -28,7 +30,7 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
 
-##
+# Simple Post Nextjs
 
 # Day 1 : Start Setup Project
 
@@ -44,7 +46,7 @@ Before you start and running this project, you need to install the following too
 
 1. Sign up for a account at [https://clerk.com](https://clerk.com)
 2. Create a new project application.
-3. Once the app is created, get the followinf values from the Clerk Dashboard:
+3. Once the app is created, get the following values from the Clerk Dashboard:
    1. Publishable Key
    - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
    2. Secret Key
