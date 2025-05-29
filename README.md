@@ -81,5 +81,5 @@ DIRECT_URL=your_supabase_direct_connection_url
 
 ## Migrate & Push Database
 
-1. Run the `npx prism migrate dev` command to create a new table in the database.
+1. Run the `npx prisma migrate dev` command to create a new table in the database.
 2. Run the `npm run db:push` command to push the changes to the database.
