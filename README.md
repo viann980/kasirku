@@ -30,7 +30,7 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 
 ##
 
-# Start Setup Project
+# Day 1 : Start Setup Project
 
 Before you start and running this project, you need to install the following tools:
 
@@ -83,3 +83,5 @@ DIRECT_URL=your_supabase_direct_connection_url
 
 1. Run the `npx prisma migrate dev` command to create a new table in the database.
 2. Run the `npm run db:push` command to push the changes to the database.
+
+# Day 2 :
