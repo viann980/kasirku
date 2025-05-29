@@ -27,3 +27,55 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 ## How do I deploy this?
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+
+##
+
+# Start Setup Project
+
+Before you start and running this project, you need to install the following tools:
+
+1. Make sure you already have or install node.js/npm.
+2. Clone this project [https://github.com/RheinSullivan/simple-post_nextjs.git](https://github.com/RheinSullivan/simple-post_nextjs.git).
+3. Install the dependencies by running `npm install`.
+4. Renaming the `.env.example` component to `.env` is mandatory.
+5. Run `npm run dev` to start the development server.
+
+## Clerk Setup
+
+1. Sign up for a account at [https://clerk.com](https://clerk.com)
+2. Create a new project application.
+3. Once the app is created, get the followinf values from the Clerk Dashboard:
+   - `Publishable Key`
+   * `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - `Secret Key`
+   * `CLERK_SECRET_KEY`
+
+Add them to the `.env` file.
+
+```.env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+```
+
+## Supabase Setup
+1. Register for an account at [https://supabase.com](https://supabase.com)
+2. Buat project baru
+3. Di dashboard Supabase, klik nama project Anda di topbar
+4. Klik tombol **Connect** di kanan atas
+5. Buka tab **ORMs**
+6. Salin file .env.local  yang tersedia, dan masukkan ke dalam variabel di bawah ini
+7. Jangan lupa mengganti `YOUR_PASSWORD` pada string tersebut dengan password database Anda (bisa dilihat di halaman **Project Settings > Database**)
+
+Tambahkan ke dalam file `.env`:
+
+```env
+# Connect to Supabase via connection pooling
+DATABASE_URL=your_supabase_connection_pooling_url
+
+# Direct connection to the database. Used for migrations
+DIRECT_URL=your_supabase_direct_connection_url
+```
+>
+## Migrate & Push Database
+1. Run the `npx prism migrate dev` command to create a new table in the database.
+2. Run the `npm run db:push` command to push the changes to the database.
