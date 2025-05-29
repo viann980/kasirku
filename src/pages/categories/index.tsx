@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-// import { CATEGORIES, type Category } from "@/data/mock";
 import { categoryFormSchema, type CategoryFormSchema } from "@/forms/category";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { ReactElement } from "react";
@@ -27,16 +26,18 @@ import { useForm } from "react-hook-form";
 import type { NextPageWithLayout } from "../_app";
 import { api } from "@/utils/api";
 
+// ========== Main Page Component ==========
 const CategoriesPage: NextPageWithLayout = () => {
   const apiUtils = api.useUtils();
 
+  // ========== Dialog State ==========
   const [createCategoryDialogOpen, setCreateCategoryDialogOpen] =
     useState(false);
   const [editCategoryDialogOpen, setEditCategoryDialogOpen] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
   const [categoryToEdit, setCategoryToEdit] = useState<string | null>(null);
 
-  // FORMS Create
+  // ========== React Hook Forms ==========
   const createCategoryForm = useForm<CategoryFormSchema>({
     resolver: zodResolver(categoryFormSchema),
   });
@@ -45,14 +46,14 @@ const CategoriesPage: NextPageWithLayout = () => {
     resolver: zodResolver(categoryFormSchema),
   });
 
-  // Queries and Mutations
+  // ========== API Queries ==========
   const { data: categories, isLoading: categoriesIsLoading } =
     api.category.getCategories.useQuery();
 
+  // ========== API Mutations ==========
   const { mutate: createCategory } = api.category.createCategory.useMutation({
     onSuccess: async () => {
       await apiUtils.category.getCategories.invalidate();
-
       alert("Successfully created a new category");
       setCreateCategoryDialogOpen(false);
       createCategoryForm.reset();
@@ -63,7 +64,6 @@ const CategoriesPage: NextPageWithLayout = () => {
     api.category.deleteCategoryById.useMutation({
       onSuccess: async () => {
         await apiUtils.category.getCategories.invalidate();
-
         alert("Successfully deleted a category");
         setCategoryToDelete(null);
       },
@@ -72,7 +72,6 @@ const CategoriesPage: NextPageWithLayout = () => {
   const { mutate: editCategory } = api.category.editCategory.useMutation({
     onSuccess: async () => {
       await apiUtils.category.getCategories.invalidate();
-
       alert("Successfully edited a category");
       editCategoryForm.reset();
       setCategoryToEdit(null);
@@ -80,29 +79,20 @@ const CategoriesPage: NextPageWithLayout = () => {
     },
   });
 
-  // Handle Buttons
+  // ========== Event Handlers ==========
   const handleSubmitCreateCategory = (data: CategoryFormSchema) => {
-    createCategory({
-      name: data.name,
-    });
+    createCategory({ name: data.name });
   };
 
   const handleSubmitEditCategory = (data: CategoryFormSchema) => {
     if (!categoryToEdit) return;
-
-    editCategory({
-      name: data.name,
-      categoryId: categoryToEdit,
-    });
+    editCategory({ name: data.name, categoryId: categoryToEdit });
   };
 
   const handleClickEditCategory = (category: { id: string; name: string }) => {
     setEditCategoryDialogOpen(true);
     setCategoryToEdit(category.id);
-
-    editCategoryForm.reset({
-      name: category.name,
-    });
+    editCategoryForm.reset({ name: category.name });
   };
 
   const handleClickDeleteCategory = (categoryId: string) => {
@@ -111,14 +101,13 @@ const CategoriesPage: NextPageWithLayout = () => {
 
   const handleConfirmDeleteCategory = () => {
     if (!categoryToDelete) return;
-
-    deleteCategoryById({
-      categoryId: categoryToDelete,
-    });
+    deleteCategoryById({ categoryId: categoryToDelete });
   };
 
+  // ========== Render UI ==========
   return (
     <>
+      {/* Header Section */}
       <DashboardHeader>
         <div className="flex items-center justify-between">
           <div className="space-y-1">
@@ -128,6 +117,7 @@ const CategoriesPage: NextPageWithLayout = () => {
             </DashboardDescription>
           </div>
 
+          {/* Create Category Dialog */}
           <AlertDialog
             open={createCategoryDialogOpen}
             onOpenChange={setCreateCategoryDialogOpen}
@@ -145,7 +135,6 @@ const CategoriesPage: NextPageWithLayout = () => {
                   submitText="Create Category"
                 />
               </Form>
-
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <Button
@@ -161,25 +150,25 @@ const CategoriesPage: NextPageWithLayout = () => {
         </div>
       </DashboardHeader>
 
+      {/* Category List */}
       <div className="grid grid-cols-4 gap-4">
-        {categories?.map((category) => {
-          return (
-            <CategoryCatalogCard
-              key={category.id}
-              name={category.name}
-              productCount={category.productCount}
-              onDelete={() => handleClickDeleteCategory(category.id)}
-              onEdit={() =>
-                handleClickEditCategory({
-                  id: category.id,
-                  name: category.name,
-                })
-              }
-            />
-          );
-        })}
+        {categories?.map((category) => (
+          <CategoryCatalogCard
+            key={category.id}
+            name={category.name}
+            productCount={category.productCount}
+            onDelete={() => handleClickDeleteCategory(category.id)}
+            onEdit={() =>
+              handleClickEditCategory({
+                id: category.id,
+                name: category.name,
+              })
+            }
+          />
+        ))}
       </div>
 
+      {/* Edit Category Dialog */}
       <AlertDialog
         open={editCategoryDialogOpen}
         onOpenChange={setEditCategoryDialogOpen}
@@ -194,7 +183,6 @@ const CategoriesPage: NextPageWithLayout = () => {
               submitText="Edit Category"
             />
           </Form>
-
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <Button
@@ -206,6 +194,7 @@ const CategoriesPage: NextPageWithLayout = () => {
         </AlertDialogContent>
       </AlertDialog>
 
+      {/* Delete Confirmation Dialog */}
       <AlertDialog
         open={!!categoryToDelete}
         onOpenChange={(open) => {
@@ -234,6 +223,7 @@ const CategoriesPage: NextPageWithLayout = () => {
   );
 };
 
+// ========== Page Layout Wrapper ==========
 CategoriesPage.getLayout = (page: ReactElement) => {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
