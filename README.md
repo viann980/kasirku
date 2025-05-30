@@ -65,13 +65,17 @@ DIRECT_URL=your_supabase_direct_connection_url
 9. Don't forget to install the `Supabase-Js` depedency, with the prompt `npm install @supabase/supabase-js`.
 10. Open the Supabase sidebar again, in the **Storage** menu section, create a storage inside the supabase named `product-images` (optional name) make sure to enable `Public bucket`, so that the images uploaded to the Supabase database, will appear in the Product Management frontend, align it with the `bucket.ts` component.
 
-Add them to the `.env` file:
+Add them to the `.env` & `bucket.ts` file:
+
+_.env_
 
 ```.env
 NEXT_PUBLIC_SUPABASE_URL=your_api_key
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_api_key
 SUPABASE_ROLE_KEY=your_api_key
 ```
+
+_bucket.ts_
 
 ```bucket.ts
   export enum Bucket {
