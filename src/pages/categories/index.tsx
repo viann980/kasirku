@@ -25,10 +25,21 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { NextPageWithLayout } from "../_app";
 import { api } from "@/utils/api";
+import { Notification } from "@/components/ui/notification";
 
 // ========== Main Page Component ==========
-const CategoriesPage: NextPageWithLayout = () => {
+const CategoriesPage: NextPageWithLayout = (props) => {
   const apiUtils = api.useUtils();
+
+  // ========== Modal Notification ==========
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
+
+  const showNotification = (message: string, type: "success" | "error") => {
+    setNotification({ message, type });
+  };
 
   // ========== Dialog State ==========
   const [createCategoryDialogOpen, setCreateCategoryDialogOpen] =
@@ -54,7 +65,7 @@ const CategoriesPage: NextPageWithLayout = () => {
   const { mutate: createCategory } = api.category.createCategory.useMutation({
     onSuccess: async () => {
       await apiUtils.category.getCategories.invalidate();
-      alert("Successfully created a new category");
+      showNotification("Successfully created a new category", "success");
       setCreateCategoryDialogOpen(false);
       createCategoryForm.reset();
     },
@@ -64,7 +75,7 @@ const CategoriesPage: NextPageWithLayout = () => {
     api.category.deleteCategoryById.useMutation({
       onSuccess: async () => {
         await apiUtils.category.getCategories.invalidate();
-        alert("Successfully deleted a category");
+        showNotification("Successfully deleted a category", "success");
         setCategoryToDelete(null);
       },
     });
@@ -72,7 +83,7 @@ const CategoriesPage: NextPageWithLayout = () => {
   const { mutate: editCategory } = api.category.editCategory.useMutation({
     onSuccess: async () => {
       await apiUtils.category.getCategories.invalidate();
-      alert("Successfully edited a category");
+      showNotification("Successfully edited a category", "success");
       editCategoryForm.reset();
       setCategoryToEdit(null);
       setEditCategoryDialogOpen(false);
@@ -116,6 +127,15 @@ const CategoriesPage: NextPageWithLayout = () => {
               Organize your products with custom categories.
             </DashboardDescription>
           </div>
+
+          {/* Notification */}
+          {notification && (
+            <Notification
+              message={notification.message}
+              type={notification.type}
+              onClose={() => setNotification(null)}
+            />
+          )}
 
           {/* Create Category Dialog */}
           <AlertDialog

@@ -54,6 +54,57 @@ DIRECT_URL=your_supabase_direct_connection_url
 
 # Day 2 :
 
+1. Open the database that you have created.
+2. Notice on the left sidebar, there is a **Settings** menu.
+3. Click the **Settings** menu, then in the `Project Settings` section, click the `API Keys` menu.
+4. In the `service_role` `secret` section, copy and save the `secret` value.
+5. Place the `secret` value in the `SUPABASE_ROLE_KEY` variable in the `.env` file.
+6. Notice in the header, to the right of your database menu, there is a **Connect** menu, click the menu.
+7. Click the `App Frameworks` section, make sure to select the `Next.js` framework, using `Pages Router`, and with `Supabase-Js`.
+8. Then copy everything in the `.env.local` column, to get `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_AMON_KEY`.
+9. Don't forget to install the `Supabase-Js` depedency, with the prompt `npm install @supabase/supabase-js`.
+10. Open the Supabase sidebar again, in the **Storage** menu section, create a storage inside the supabase named `product-images` (optional name) make sure to enable `Public bucket`, so that the images uploaded to the Supabase database, will appear in the Product Management frontend, align it with the `bucket.ts` component.
+
+Add them to the `.env` file:
+
+```.env
+NEXT_PUBLIC_SUPABASE_URL=your_api_key
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_api_key
+SUPABASE_ROLE_KEY=your_api_key
+```
+
+```bucket.ts
+  export enum Bucket {
+    ProductImages = "product-images", //optional
+  }
+```
+
+_Hasil Kegiatan :_
+
+- [x] Create product
+- [x] Read Product
+- [x] Include file uploads with signed URL
+- [x] Forms -> RHF (React Hook Form)
+- Update Product
+- Filter products by category
+- Delete Product
+
+PRE-SIGNED URL -> POST https://.......
+
+1. Send a request to the backend to get a presigned URL
+2. Upload the image to the presigned URL
+3. Retrieve the object URL (product image)
+4. Send the image URL to the tRPC mutation
+
+Cons
+
+- Requires two requests
+- The uploaded image might not be used
+
+Pros
+
+- Does not burden the server
+
 # Create T3 App
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
