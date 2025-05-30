@@ -83,7 +83,7 @@ _bucket.ts_
   }
 ```
 
-_Hasil Kegiatan :_
+_Activity Result :_
 
 - [x] Create product
 - [x] Read Product
