@@ -85,7 +85,7 @@ _bucket.ts_
 
 _Activity Result :_
 
-- [x] Create product
+- [x] Create product  
 - [x] Read Product
 - [x] Include file uploads with signed URL
 - [x] Forms -> RHF (React Hook Form)
