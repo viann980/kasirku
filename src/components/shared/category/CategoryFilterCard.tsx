@@ -20,7 +20,7 @@ export const CategoryFilterCard = ({
     >
       <div className="text-lg font-medium">{name}</div>
       <div className="text-muted-foreground text-sm">
-        {productCount} Product{productCount === 1 ? "" : "s"}
+        {productCount} Product{productCount === 1 ? "s" : "s"}
       </div>
     </button>
   );

@@ -6,16 +6,16 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL") // untuk sync ke db supabase
+    provider  = "postgresql"
+    url       = env("DATABASE_URL") // untuk sync ke db supabase
     directUrl = env("DIRECT_URL") // untuk direct connection ke db supabase
 }
 
-model Category{
+model Category {
     id String @id @default(uuid())
 
-    name String
-    productCount Int @default(0)
+    name         String
+    productCount Int    @default(0)
 
     products Product[]
 
@@ -23,16 +23,55 @@ model Category{
     updatedAt DateTime @updatedAt
 }
 
-model Product{
+model Product {
     id String @id @default(uuid())
 
-    name String
-    price Int
+    name     String
+    price    Int
     imageUrl String?
 
-    category Category @relation(fields: [categoryId], references: [id])
+    category   Category @relation(fields: [categoryId], references: [id])
     categoryId String
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime    @default(now())
+    updatedAt DateTime    @updatedAt
+    OrderItem OrderItem[]
+}
+
+model Order {
+    id String @id @default(uuid())
+
+    subtotal   Int
+    tax        Int
+    grandTotal Int
+
+    // payment gateway fields
+    externalTransactionId String?
+    paymentStatus         String?
+    paymentMethodId   String?
+    status                OrderStatus @default(AWAITING_PAYMENT)
+
+    paidAt    DateTime?
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+
+    orderItems OrderItem[]
+}
+
+model OrderItem {
+    id        String @id @default(uuid())
+    productId String
+    orderId   String
+
+    product Product @relation(fields: [productId], references: [id])
+    order   Order   @relation(fields: [orderId], references: [id])
+
+    price    Int
+    quantity Int
+}
+
+enum OrderStatus {
+    AWAITING_PAYMENT
+    PROCESSING
+    DONE
 }

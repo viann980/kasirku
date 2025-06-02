@@ -28,7 +28,7 @@ import { api } from "@/utils/api";
 import { Notification } from "@/components/ui/notification";
 
 // ========== Main Page Component ==========
-const CategoriesPage: NextPageWithLayout = (props) => {
+const CategoriesPage: NextPageWithLayout = () => {
   const apiUtils = api.useUtils();
 
   // ========== Modal Notification ==========
@@ -58,7 +58,7 @@ const CategoriesPage: NextPageWithLayout = (props) => {
   });
 
   // ========== API Queries ==========
-  const { data: categories, isLoading: categoriesIsLoading } =
+  const { data: categories, isLoading: isCategoryLoading } =
     api.category.getCategories.useQuery();
 
   // ========== API Mutations ==========
@@ -96,8 +96,10 @@ const CategoriesPage: NextPageWithLayout = (props) => {
   };
 
   const handleSubmitEditCategory = (data: CategoryFormSchema) => {
-    if (!categoryToEdit) return;
-    editCategory({ name: data.name, categoryId: categoryToEdit });
+    if (!categoryToEdit) {
+      return;
+    }
+    editCategory({ name: data.name, id: categoryToEdit });
   };
 
   const handleClickEditCategory = (category: { id: string; name: string }) => {
@@ -106,13 +108,13 @@ const CategoriesPage: NextPageWithLayout = (props) => {
     editCategoryForm.reset({ name: category.name });
   };
 
-  const handleClickDeleteCategory = (categoryId: string) => {
-    setCategoryToDelete(categoryId);
+  const handleClickDeleteCategory = (id: string) => {
+    setCategoryToDelete(id);
   };
 
   const handleConfirmDeleteCategory = () => {
     if (!categoryToDelete) return;
-    deleteCategoryById({ categoryId: categoryToDelete });
+    deleteCategoryById({ id: categoryToDelete });
   };
 
   // ========== Render UI ==========
@@ -172,20 +174,24 @@ const CategoriesPage: NextPageWithLayout = (props) => {
 
       {/* Category List */}
       <div className="grid grid-cols-4 gap-4">
-        {categories?.map((category) => (
-          <CategoryCatalogCard
-            key={category.id}
-            name={category.name}
-            productCount={category.productCount}
-            onDelete={() => handleClickDeleteCategory(category.id)}
-            onEdit={() =>
-              handleClickEditCategory({
-                id: category.id,
-                name: category.name,
-              })
-            }
-          />
-        ))}
+        {isCategoryLoading ? (
+          <p>Loading...</p>
+        ) : (
+          categories?.map((category) => (
+            <CategoryCatalogCard
+              key={category.id}
+              name={category.name}
+              productCount={category.productCount}
+              onDelete={() => handleClickDeleteCategory(category.id)}
+              onEdit={() =>
+                handleClickEditCategory({
+                  id: category.id,
+                  name: category.name,
+                })
+              }
+            />
+          ))
+        )}
       </div>
 
       {/* Edit Category Dialog */}

@@ -101,13 +101,23 @@ PRE-SIGNED URL -> POST https://.......
 4. Send the image URL to the tRPC mutation
 
 Cons
-
 - Requires two requests
 - The uploaded image might not be used
 
 Pros
-
 - Does not burden the server
+
+# Day 3
+
+- [x] Read products (filter by category)
+- [x] Add to cart (global state with Zustand)
+- [x] Generate QRIS (Xendit)
+- [ ] Handle payment (webhook -> NGROK | localtunnel)
+
+Webhook -> POST request from Xendit sent to the Next.js API when a payment is made
+
+tRPC -> Tanstack Query / React Query
+- Handle caching
 
 # Create T3 App
 

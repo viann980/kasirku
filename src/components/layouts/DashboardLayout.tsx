@@ -1,5 +1,12 @@
-import { BarChart3, Grid3X3, Package, ShoppingCart, Sun } from "lucide-react";
-import React, { type ReactNode } from "react";
+import {
+  BarChart3,
+  Grid3X3,
+  MoonStar,
+  Package,
+  ShoppingCart,
+  Sun,
+} from "lucide-react";
+import React, { useEffect, useState, type ReactNode } from "react";
 
 import {
   Sidebar,
@@ -67,13 +74,16 @@ interface DashboardLayoutProps {
 
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const router = useRouter();
-
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
-
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex h-screen w-full">
@@ -82,8 +92,8 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             <h2 className="text-xl font-bold">Mini Class Next.js</h2>
             <p className="text-xs">
               With{" "}
-              <i className="text-primary">Theodore Rivaldo Devo Mangowal </i> &{" "}
-              <i className="text-purple-700">Dunia Coding</i>.
+              <i className="text-green-500">Theodore Rivaldo Devo Mangowal </i>{" "}
+              & <i className="text-purple-700">Dunia Coding</i>.
             </p>
           </SidebarHeader>
           <SidebarContent className="px-4">
@@ -145,14 +155,26 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
-          {/* <SidebarFooter className="p-4">
+          <SidebarFooter className="p-4">
             <p className="text-muted-foreground text-xs">Simple POS v1.0</p>
             <div className="flex items-center gap-2">
               <Button variant="ghost" onClick={toggleTheme}>
-                {theme === "dark" ? "Dark Mode" : "Light Mode"}
+                {mounted && theme === "dark" ? (
+                  <>
+                    <MoonStar className="mr-2 h-10 w-10" />
+                    Dark Mode
+                  </>
+                ) : mounted ? (
+                  <>
+                    <Sun className="mr-2 h-10 w-10" />
+                    Light Mode
+                  </>
+                ) : (
+                  <>Loading...</>
+                )}
               </Button>
             </div>
-          </SidebarFooter> */}
+          </SidebarFooter>
         </Sidebar>
 
         <main className="relative flex-1 overflow-auto p-6">{children}</main>

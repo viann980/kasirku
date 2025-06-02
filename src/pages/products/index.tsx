@@ -24,8 +24,12 @@ import { useForm } from "react-hook-form";
 import { productFormSchema, type ProductFormSchema } from "@/forms/product";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Notification } from "@/components/ui/notification";
+import {
+  deleteFileFromBucket,
+  extractPathFromSupabaseUrl,
+} from "@/lib/supabase";
+import { Bucket } from "@/server/bucket";
 
-// 🔧 Tambahkan type ini agar UpdateProductSchema tidak undefined
 type UpdateProductSchema = {
   id: string;
   name: string;
@@ -49,16 +53,18 @@ const ProductsPage: NextPageWithLayout = () => {
   const [uploadedCreateProductImageUrl, setUploadedCreateProductImageUrl] =
     useState<string | null>(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
-
+  const [deleteUploadImageUrl, setDeleteUploadImageUrl] = useState<
+    string | null
+  >(null);
   const [createProductDialogOpen, setCreateProductDialogOpen] = useState(false);
-
   const [editProduct, setEditProduct] = useState<string | null>(null);
   const [editProductDialogOpen, setEditProductDialogOpen] = useState(false);
-
   const [deleteProductId, setDeleteProductId] = useState<string | null>(null);
   const [deleteProductDialogOpen, setDeleteProductDialogOpen] = useState(false);
 
-  const { data: products } = api.product.getProducts.useQuery();
+  const { data: products } = api.product.getProducts.useQuery({
+    categoryId: "all",
+  });
 
   const { mutate: createProduct } = api.product.createProduct.useMutation({
     onSuccess: async () => {
@@ -94,7 +100,17 @@ const ProductsPage: NextPageWithLayout = () => {
     onSuccess: async () => {
       await apiUtils.product.getProducts.invalidate();
       showNotification("Successfully updated product", "success");
+      if (deleteUploadImageUrl) {
+        await deleteFileFromBucket({
+          path: deleteUploadImageUrl,
+          bucket: Bucket.ProductImages,
+        });
+      }
+
       setEditProductDialogOpen(false);
+      setUploadedImageUrl(null);
+      setDeleteUploadImageUrl(null);
+      updateProductForm.reset();
     },
   });
 
@@ -110,6 +126,10 @@ const ProductsPage: NextPageWithLayout = () => {
     setEditProduct(product.id);
     setEditProductDialogOpen(true);
     setUploadedImageUrl(product.imageUrl ?? "");
+    if (product.imageUrl) {
+      const path = extractPathFromSupabaseUrl(product.imageUrl);
+      setDeleteUploadImageUrl(path);
+    }
 
     updateProductForm.reset({
       name: product.name,

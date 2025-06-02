@@ -144,7 +144,6 @@ export const ProductForm = ({
 
       <div className="space-y-1">
         <Label>Product Image</Label>
-
         <Input onChange={imageChangeHandler} type="file" accept="image/*" />
       </div>
     </form>
