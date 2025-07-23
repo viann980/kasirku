@@ -3,7 +3,7 @@
 Before you start and running this project, you need to install the following tools:
 
 1. Make sure you already have or install node.js/npm.
-2. Clone this project [https://github.com/RheinSullivan/simple-post_nextjs.git](https://github.com/RheinSullivan/simple-post_nextjs.git).
+2. Clone this project [https://github.com/viann980/kasirku](https://github.com/viann980/kasirku).
 3. Install the dependencies by running `npm install`.
 4. Renaming the `.env.example` component to `.env` is mandatory.
 5. Run `npm run dev` to start the development server.
